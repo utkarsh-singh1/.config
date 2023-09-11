@@ -50,13 +50,16 @@ keymap('n', '<leader>l', ':FloatermNew --height=1.0 --width=0.6 --position=topri
 keymap('n', '<tab>', '<C-w><C-w>', {noremap = true})
 keymap('n', '<leader>a', ':vsplit new-file<CR>', {noremap = true})
 
--- move between tabs
+-- move between tabs (BufferLine setup)
 keymap('n', '<leader>j', ':BufferLineCyclePrev<CR>', {noremap = true})
 keymap('n', '<leader>k', ':BufferLineCycleNext<CR>', {noremap = true})
 
 -- Fugitive
 keymap('n', '<leader>f', ':Git fetch upstream<CR>', {noremap = true})
 keymap('n', '<leader>m', ':Git merge upstream/main<CR>', {noremap = true})
-keymap('n', '<C-a>', ':Git status<CR>', {noremap = true})
+keymap('n', '<C-a>'    , ':Git status<CR>', {noremap = true})
+keymap('n', '<leader>A', ':Git add -A<CR>', {noremap = true})
+keymap('n', '<leader>C', ':Git commit<CR>', {noremap = true})
+keymap('n', '<leader>P', ':Git push<CR>', {noremap = true})
 
 

@@ -81,5 +81,8 @@ return require('packer').startup(function()
   requires = { {'nvim-lua/plenary.nvim'} }
 }
 
+  -- Readme.md
+  use {'iamcco/markdown-preview.nvim'}
+
 end)
 
