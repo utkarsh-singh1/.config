@@ -378,6 +378,7 @@
                  (make-local-variable 'auto-hscroll-mode)
                  (setq auto-hscroll-mode nil)))))
 
+(use-package treemacs)
 ;; ;; Org-Mode setup
 
 ;; Turn on indentation and auto-fill mode for Org files
