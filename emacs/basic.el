@@ -8,12 +8,13 @@
 (set-fringe-style 10)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(display-battery-mode 1)
 
 ;; Put backup file or backup data in another directory instead of creating clutter
 (setq backup-directory-alist '((".*" . "~/.Trash")))
 
 ;; Set Fonts
-(set-face-attribute 'default nil :family "Lilex Nerd Font" :height 118 )
+(set-face-attribute 'default nil :family "FiraCode Nerd Font Mono" :height 115 )
 
 ;; Line numbers mode
 (global-display-line-numbers-mode 1)
@@ -25,11 +26,14 @@
 		shell-mode-hook
 		term-mode-hook
 		vterm-mode-hook
-		vterm-toggle-mode-hook))
+		vterm-toggle-mode-hook
+		treemacs-mode-hook
+		neotree-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; key-bindings
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-set-key (kbd "s-f") 'toggle-frame-fullscreen)
 
 ;; Package Archives - where packages are stored and use-package to fecth them
 ;; Initialize package sources
@@ -64,7 +68,18 @@
   (setq lsp-yaml-schemas '(:kubernetes "/*-k8s.yaml"))
   :custom
   (lsp-yaml-completion t)
-)
+  )
+
+(use-package web-mode
+  :mode "\\.html\\'"
+  :hook (web-mode . lsp-deferred)
+  :custom
+  (lsp-html-auto-closing-tags t)
+  )
+
+;; (use-package emmet-mode
+;;   :hook (emmet-mode . web-mode)
+;;   )
 
 (use-package lua-mode)
 
@@ -125,7 +140,7 @@
 
 
 ;; Use-mode-line or not
-(use-package mini-echo)
+;; (use-package mini-echo)
 
 (use-package doom-modeline
   :init
@@ -136,7 +151,7 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-gruvbox' t)
+  (load-theme 'doom-bluloco-dark' t)
   )
 
 (use-package one-themes)
@@ -290,4 +305,27 @@
                  (make-local-variable 'auto-hscroll-mode)
                  (setq auto-hscroll-mode nil)))))
 
-(use-package treemacs)
+;; (use-package treemacs)
+
+;; Dashboard
+
+(use-package dashboard
+  :ensure t 
+  :init
+  (setq initial-buffer-choice 'dashboard-open)
+  (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+  (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  (setq dashboard-startup-banner "/home/utkarsh/.config/emacs/gnu.jpg")  ;; use custom image as banner
+  (setq dashboard-center-content t) ;; set to 't' for centered content
+  (setq dashboard-items '((recents . 5)
+                          (agenda . 5 )
+                          (bookmarks . 3)
+                          (projects . 3)
+                          (registers . 3)))
+  ;; (dashboard-modify-heading-icons '((recents . "file-text")
+  ;;                             (bookmarks . "book")))
+  :config
+  (dashboard-setup-startup-hook))
