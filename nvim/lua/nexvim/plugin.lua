@@ -14,14 +14,16 @@
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'tpope/vim-fugitive'
-
+  use 'nvim-tree/nvim-web-devicons'
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
 
   
   -- Theme
+  use {'nyoom-engineering/oxocarbon.nvim'}
+  use "rebelot/kanagawa.nvim"
   use {'luisiacc/gruvbox-baby', branch = 'main'}
   --use "olimorris/onedarkpro.nvim"
   use 'navarasu/onedark.nvim'
@@ -54,6 +56,8 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
+  use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
+  use 'L3MON4D3/LuaSnip'
 
   -- Autopairs
   use {
@@ -65,12 +69,11 @@ return require('packer').startup(function()
   use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons'}
 
  -- Nvim-tree
- use {
+use {
   'nvim-tree/nvim-tree.lua',
   requires = {
-    'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    'nvim-tree/nvim-web-devicons', -- optional
   },
-  tag = 'nightly' 
 }
 
  
