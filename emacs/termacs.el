@@ -103,6 +103,8 @@
 (use-package smartparens
   :hook (prog-mode . smartparens-mode))
 
+(use-package nordic-night-theme)
+
 (use-package doom-themes
   :ensure t
   :config
