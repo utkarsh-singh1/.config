@@ -1,3 +1,14 @@
+
+;; ████████╗███████╗██████╗ ███╗   ███╗ █████╗  ██████╗███████╗
+;; ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██╔════╝
+;;    ██║   █████╗  ██████╔╝██╔████╔██║███████║██║     ███████╗
+;;    ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██╔══██║██║     ╚════██║
+;;    ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║  ██║╚██████╗███████║
+;;    ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝
+                                                            
+
+
+
 ;; Package Archives - where packages are stored and use-package to fecth them
 ;; Initialize package sources
 (require 'package)
@@ -89,10 +100,6 @@
   :ensure t
   :init (all-the-icons-ivy-rich-mode 1))
 
-(use-package all-the-icons-dired
-  :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
-
-
 (use-package smartparens
   :hook (prog-mode . smartparens-mode))
 
@@ -100,7 +107,11 @@
   :ensure t
   :config
   (load-theme
-   'doom-vibrant t))
+   ;;'doom-vibrant t)
+   ;;'doom-gruvbox-light t)
+   ;;'timu-macos t)
+   'nordic-night t)
+  )
 
 (setq mode-line-position (list "(%l,%c)"))
 
