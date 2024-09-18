@@ -142,6 +142,7 @@ alias vim="nvim"
 alias tmux="tmux -u"
 alias kctl="kubectl"
 alias mi="micro"
+alias tmacs="emacs -nw -l ~/.config/emacs/termacs.el"
 #
 #
 starship init fish | source
@@ -165,7 +166,6 @@ end
 
 
 # Kubectl completion 
-
 kubectl completion fish | source
 
 # Add Homebrew to PATH
@@ -175,9 +175,6 @@ set -U fish_user_paths /home/linuxbrew/.linuxbrew/bin
 # Add ~/.local/bin to path
 
 set -U fish_user_paths /home/.local/bin
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/utkarsh/google-cloud-sdk/path.fish.inc' ]; . '/home/utkarsh/google-cloud-sdk/path.fish.inc'; end
 
 
 
