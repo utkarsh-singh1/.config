@@ -8,16 +8,14 @@
 (set-fringe-style 10)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
-
-(display-battery-mode t)
-(display-time-mode t)
+(display-battery-mode 1)
+(display-time-mode 1)
 
 ;; Put backup file or backup data in another directory instead of creating clutter
 (setq backup-directory-alist '((".*" . "~/.Trash")))
 
 ;; Set Fonts
 (set-face-attribute 'default nil :family "FiraCode Nerd Font Mono" :height 115 )
-
 
 ;; Line numbers mode
 (global-display-line-numbers-mode 1)
@@ -31,18 +29,13 @@
 		vterm-mode-hook
 		vterm-toggle-mode-hook
 		treemacs-mode-hook
-		neotree-mode-hook))
+		neotree-mode-hook
+		eat-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; key-bindings
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (global-set-key (kbd "s-f") 'toggle-frame-fullscreen)
-
-;; Use this keybinding temporarily for maximze Emacs to its full screen potential
-;; (global-set-key (kbd "s-f") 'toggle-frame-fullscreen)
-;; (if (getenv "XDG_SESSION_DESKTOP" 'KDE)
-;;     (global-set-key (kbd "s-f") 'toggle-frame-fullscreen))
-
 
 ;; Package Archives - where packages are stored and use-package to fecth them
 ;; Initialize package sources
@@ -50,7 +43,9 @@
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("elpa" . "https://elpa.gnu.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			 ))
 
 (package-initialize)
 (unless package-archive-contents
@@ -160,7 +155,7 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-snazzy t)
+  (load-theme 'farmhouse-dark t)
   )
 
 (use-package one-themes)
@@ -232,59 +227,9 @@
   (which-key-mode t)
   )
 
-;; (use-package general
-
-;;   :config
-;;   (general-create-definer basic/leader-keys
-;;     :keymaps '(normal insert visual emacs)
-;;     :prefix "SPC" ;; Set Space as leader key
-;;     :global-prefix "C-SPC") ;; Access leader key in Insert mode
-
-
-;;   ;; Options Keymaps
-;;   (basic/leader-keys
-;;     "o" '(:ignore t :which-key "Options")
-;;     "o t" '(counsel-load-theme :which-key "choose theme")
-;;     )
+(use-package general
   
-;;   )
-
-
-;; (use-package evil
-;;   :init
-;;   (setq evil-want-integration t)
-;;   (setq evil-want-keybinding nil)
-;;   (setq evil-want-C-u-scroll t)
-;;   (setq evil-want-C-i-jump nil)
-;;   (setq evil-vsplit-window-right t)
-;;   (setq evil-split-window-below t)
-
-;;   ;; (setq evil-respect-visual-line-mode t)
-;;   ;; (setq evil-undo-system 'undo-tree)
-;;   ;; :hook (evil-mode . rem/evil-hook)
-
-;;   :config
-;;   (evil-mode 1)
-;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-;;   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-;;   ;; Use visual line motions even outside of visual-line-mode buffers
-;;   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-;;   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-
-;;   (evil-set-initial-state 'messages-buffer-mode 'normal)
-;;   (evil-set-initial-state 'dashboard-mode 'normal))
-
-
-;; (use-package evil-collection
-;;   :after evil
-;;   :config
-;;   (evil-collection-init)
-;;   )
-
-(use-package projectile)
-
+  )
 
 
 ;; Git Based Settings
@@ -296,20 +241,7 @@
 
 (use-package forge)
 
-(use-package git-gutter
-
-  :hook ((text-mode . git-gutter-mode)
-	 (prog-mode . git-gutter-mode))
-  :config
-  (setq git-gutter:update-interval 0.02)
-
-  )
-
-(use-package git-gutter-fringe
-  :config
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+(use-package git-gutter)
 
 (use-package blamer)
 
@@ -367,8 +299,7 @@
         neo-window-width 55
         neo-window-fixed-size nil
         inhibit-compacting-font-caches t
-        projectile-switch-project-action 'neotree-projectile-action)
-        neo-theme (if (display-graphic-p) 'icons)
+        projectile-switch-project-action 'neotree-projectile-action) 
         ;; truncate long file names in neotree
         (add-hook 'neo-after-create-hook
            #'(lambda (_)
@@ -378,123 +309,35 @@
                  (make-local-variable 'auto-hscroll-mode)
                  (setq auto-hscroll-mode nil)))))
 
-(use-package treemacs)
-;; ;; Org-Mode setup
-
-;; Turn on indentation and auto-fill mode for Org files
-(defun bs/org-mode-setup ()
-  (org-indent-mode)
-  ;;(variable-pitch-mode 1)
-  ;;(auto-fill-mode 0)
-  (visual-line-mode 1))
-  ;;(setq evil-auto-indent nil))
-
-(use-package org
-  ;; :defer t
-  :hook (org-mode . bs/org-mode-setup)
-  :config
-  (setq org-ellipsis " ▾"
-        org-hide-emphasis-markers t)
-
-  (setq org-directory "~/Tasks&Agenda")
-  
-  (setq org-agenda-files
-	'("Tasks.org" "Birthdays.org" "Target.org"
-	  "~/local-work-space/workspace/Go-workspace/src/Go-training/00_Get-Started/org-mode-tutorial.org"))
-
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-log-done 'time)
-  (setq org-log-into-drawer t)
-  
-
-  (setq org-todo-keywords
-    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-      (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
-
-  (setq org-agenda-custom-commands
-   '(("d" "Dashboard"
-     ((agenda "" ((org-deadline-warning-days 7)))
-      (todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))
-      (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
-
-    ("n" "Next Tasks"
-     ((todo "NEXT"
-        ((org-agenda-overriding-header "Next Tasks")))))
-
-    ("W" "Work Tasks" tags-todo "+work")
-
-    ;; Low-effort next actions
-    ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
-     ((org-agenda-overriding-header "Low Effort Tasks")
-      (org-agenda-max-todos 20)
-      (org-agenda-files org-agenda-files)))
-
-    ("w" "Workflow Status"
-     ((todo "WAIT"
-            ((org-agenda-overriding-header "Waiting on External")
-             (org-agenda-files org-agenda-files)))
-      (todo "REVIEW"
-            ((org-agenda-overriding-header "In Review")
-             (org-agenda-files org-agenda-files)))
-      (todo "PLAN"
-            ((org-agenda-overriding-header "In Planning")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
-      (todo "BACKLOG"
-            ((org-agenda-overriding-header "Project Backlog")
-             (org-agenda-todo-list-sublevels nil)
-             (org-agenda-files org-agenda-files)))
-      (todo "READY"
-            ((org-agenda-overriding-header "Ready for Work")
-             (org-agenda-files org-agenda-files)))
-      (todo "ACTIVE"
-            ((org-agenda-overriding-header "Active Projects")
-             (org-agenda-files org-agenda-files)))
-      (todo "COMPLETED"
-            ((org-agenda-overriding-header "Completed Projects")
-             (org-agenda-files org-agenda-files)))
-      (todo "CANC"
-            ((org-agenda-overriding-header "Cancelled Projects")
-             (org-agenda-files org-agenda-files)))))))
-
-
-  
-  )
-
-
-(use-package org-bullets
-  :after org
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-(defun bs/org-mode-visual-fill ()
-  (setq visual-fill-column-width 150
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
-
-(use-package visual-fill-column
-  :hook (org-mode . bs/org-mode-visual-fill))
-
+;; (use-package treemacs)
 
 ;; Dashboard
+
 (use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
+  :ensure t 
   :init
   (setq initial-buffer-choice 'dashboard-open)
-  (setq dashboard-banner-logo-title "Editor of the century")
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-startup-banner "~/.config/emacs/Gnu-listen-half.jpg")
   (setq dashboard-center-content t)
-  (setq dashboard-items '((recents  . 5)
-                        (bookmarks . 5)
-                        ;; (projects . 3)
-                        (agenda . 3)
-                        (registers . 3)))
-  (setq dashboard-icon-type 'all-the-icons) 
-)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+  (setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  (setq dashboard-startup-banner "/home/utkarsh/.config/emacs/gnu.jpg")  ;; use custom image as banner
+  (setq dashboard-center-content t) ;; set to 't' for centered content
+  (setq dashboard-items '((recents . 5)
+                          (agenda . 5 )
+                          (bookmarks . 3)
+                          (projects . 3)
+                          (registers . 3)))
+  ;; (dashboard-modify-heading-icons '((recents . "file-text")
+  ;;                             (bookmarks . "book")))
+  :config
+  (dashboard-setup-startup-hook))
 
+(use-package yasnippet
+  :custom
+  (yas-global-mode 1)
+  )
+
+(add-hook 'yas-minor-mode-hook (lambda ()
+				 (yas-activate-extra-mode 'fundamental-mode)))

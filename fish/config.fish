@@ -140,10 +140,13 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 
 alias vim="nvim"
 alias tmux="tmux -u"
-alias kctl="kubectl"
+alias k8s="kubectl"
 alias mi="micro"
-#
-#
+alias tmacs="emacs -nw -l ~/.config/emacs/termacs.el"
+alias tmacs-config="tmacs ~/.config/emacs/termacs.el"
+alias remacs="emacs -q -l ~/.config/emacs/basic.el"
+alias remacs-config="tmacs ~/.config/emacs/basic.el"
+
 starship init fish | source
 
 # theme_gruvbox darke
@@ -165,7 +168,6 @@ end
 
 
 # Kubectl completion 
-
 kubectl completion fish | source
 
 # Add Homebrew to PATH
@@ -175,9 +177,6 @@ set -U fish_user_paths /home/linuxbrew/.linuxbrew/bin
 # Add ~/.local/bin to path
 
 set -U fish_user_paths /home/.local/bin
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/utkarsh/google-cloud-sdk/path.fish.inc' ]; . '/home/utkarsh/google-cloud-sdk/path.fish.inc'; end
 
 
 
