@@ -9,9 +9,14 @@
 
 
 ## FIRST LINE/ROW: Info & Status
+
 # First param ─┌
 # उत्कर्ष
-# 卐 ॐ  🕉️ 
+# 卐 ॐ  🕉️
+
+add_newline = true
+
+
 [username]
 format = " [$user]($style) ॐ @"
 show_always = true
@@ -29,6 +34,7 @@ trim_at = "-"
 
 # Third param
 [directory]
+format = " [$path]($style) "
 style = "purple"
 truncate_to_repo = true
 truncation_length = 0
@@ -55,29 +61,28 @@ disabled = false
 format = "took [$duration]($style)"
 min_time = 1
 
-
 ## SECOND LINE/ROW: Prompt
 # Somethere at the beginning
-[battery]
-charging_symbol = ""
-disabled = true
-discharging_symbol = ""
-full_symbol = ""
+# [battery]
+# charging_symbol = " "
+# disabled = false
+# discharging_symbol = " "
+# full_symbol = " "
 
-[[battery.display]]  # "bold red" style when capacity is between 0% and 15%
-disabled = false
-style = "bold red"
-threshold = 15
+# [[battery.display]]  # "bold red" style when capacity is between 0% and 15%
+# disabled = false
+# style = "bold red"
+# threshold = 15
 
-[[battery.display]]  # "bold yellow" style when capacity is between 15% and 50%
-disabled = true
-style = "bold yellow"
-threshold = 50
+# [[battery.display]]  # "bold yellow" style when capacity is between 15% and 50%
+# disabled = false
+# style = "bold yellow"
+# threshold = 50
 
-[[battery.display]]  # "bold green" style when capacity is between 50% and 80%
-disabled = true
-style = "bold green"
-threshold = 80
+# [[battery.display]]  # "bold green" style when capacity is between 50% and 80%
+# disabled = false
+# style = "bold green"
+# threshold = 80
 
 # Prompt: optional param 1
 [time]

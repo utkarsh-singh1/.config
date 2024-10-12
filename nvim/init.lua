@@ -10,7 +10,6 @@
 ]]
  
 
-local cmd = vim.cmd
 
 --- Setup
 require "nexvim/options" 
@@ -24,29 +23,12 @@ require "nexvim/lspconfig"
 
 --- Themes
 -- require "nexvim/Themes/gruvbox"
-require "nexvim/Themes/onedark"
+-- require "nexvim/Themes/onedark"
 -- require "nexvim/Themes/catppuccin"
--- require "nexvim/Themes/tokyonight"
+require "nexvim/Themes/tokyonight"
 -- require "nexvim/Themes/dracula"
+-- require "nexvim/Themes/kanagawa"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- COC
-cmd "let g:coc_global_extension = [ 'coc-emmet', 'coc-go', 'coc-html', 'coc-eslint', 'coc-git', 'coc-json', 'coc-pyright', 'coc-tsserver', 'coc-prettier', 'coc-yaml']"
 
 
 

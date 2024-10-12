@@ -1,0 +1,111 @@
+{
+    "layer": "top",
+    "position": "bottom",
+    "height": 28,
+    "modules-left": ["hyprland/workspaces", 
+        // "custom/scratchpad-indicator", 
+        "custom/separator", 
+        "hyprland/mode"],
+        // "idle_inhibitor"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", 
+        "backlight", 
+        "battery", "custom/separator","custom/separator", 
+        "tray"],
+    
+    "idle_inhibitor": {
+		"format": "{icon}",
+		"format-icons": {
+			"activated": "",
+			"deactivated": ""
+		}
+	},
+
+    "hyprland/window": {
+        "max-length": 50
+    },
+	
+	"backlight": {
+		"device": "intel_backlight",
+		"format": "{icon} {percent}%",
+		"format-icons": ["🌙", "🔆"]
+	},
+
+    "custom/separator": {
+        "format": "|",
+        "interval": "once",
+        "tooltip": false
+    },
+
+    "custom/scratchpad-indicator": {
+        "interval": 3,
+        "exec": "~/.config/waybar/modules/scratchpad_indicator",
+        "format": "{} ",
+        "on-click-right": "swaymsg 'scratchpad show'",
+        "on-click": "swaymsg 'move scratchpad'"
+    },
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}: {icon}",
+        "format-icons": {
+            "1": "🌏",
+            "2": "🚀",
+            "3": "👨🏻‍💻",
+            "4": "📂",
+            "5": "🎼",
+            "6": "📤",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        // "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": "⚠ Dis",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["🔕","🔉", "🔊"]
+        },
+        "scroll-step": 1,
+        "on-click-right": "pavucontrol"
+    },
+
+    "battery": {
+        "states": {
+            "warning": 20,
+            "critical": 10
+        },
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "clock": {
+        "interval": 1,
+        "format": "🕗 {:%H:%M  |  📆 %e %b %Y}",
+        "tooltip": false
+    },
+
+    "tray": {
+        "icon-size": 20,
+        "spacing": 5
+    }
+}
