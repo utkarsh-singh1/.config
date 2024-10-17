@@ -1,37 +1,27 @@
---[[ 
-
-███╗   ██╗███████╗██╗  ██╗██╗   ██╗██╗███╗   ███╗
-████╗  ██║██╔════╝╚██╗██╔╝██║   ██║██║████╗ ████║
-██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║██║██╔████╔██║
-██║╚██╗██║██╔══╝   ██╔██╗ ╚██╗ ██╔╝██║██║╚██╔╝██║
-██║ ╚████║███████╗██╔╝ ██╗ ╚████╔╝ ██║██║ ╚═╝ ██║
-╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
-                                                    
-]]
- 
+local cmd = vim.cmd
+local set = vim.o
+--[[
+local lspconfig = require('lspconfig')
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local luasnip = require 'luasnip'
+local cmp = require 'cmp'
+--]]
 
 
---- Setup
-require "nexvim/options" 
-require "nexvim/lualine"
-require "nexvim/nvimtree"
-require "nexvim/autopairs"
-require "nexvim/keymaps"
-require "nexvim/plugin"
-require "nexvim/bufferline"
-require "nexvim/lspconfig"
+require("nexvim.lazy")
+require("nexvim.keymap")
 
---- Themes
--- require "nexvim/Themes/gruvbox"
--- require "nexvim/Themes/onedark"
--- require "nexvim/Themes/catppuccin"
-require "nexvim/Themes/tokyonight"
--- require "nexvim/Themes/dracula"
--- require "nexvim/Themes/kanagawa"
+-- Set Intial Options for Nvim
+
+set.number = true
+set.tabstop = 4
+set.shiftwidth = 4
+set.softtabstop = 0
+set.expandtab = true
+set.swapfile = false
+set.signcolumn = "yes"
+set.smartcase = true
+set.smartindent = true
 
 
 
-
-
-
-                                      
