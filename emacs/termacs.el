@@ -1,4 +1,3 @@
-
 ;; ████████╗███████╗██████╗ ███╗   ███╗ █████╗  ██████╗███████╗
 ;; ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██╔══██╗██╔════╝██╔════╝
 ;;    ██║   █████╗  ██████╔╝██╔████╔██║███████║██║     ███████╗
@@ -7,6 +6,10 @@
 ;;    ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝
                                                             
 
+
+;---------------------------------------------------------------------------------------------------------------------------------;
+;                                          Initialize Package and Respositories                                                   ;
+;---------------------------------------------------------------------------------------------------------------------------------;
 
 
 ;; Package Archives - where packages are stored and use-package to fecth them
@@ -27,6 +30,9 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+;---------------------------------------------------------------------------------------------------------------------------------;
+;                                                    Emacs Setup                                                                  ;
+;---------------------------------------------------------------------------------------------------------------------------------;
 
 ;; Set Startup-modes
 (setq inhibit-startup-message t)
@@ -57,6 +63,12 @@
 
 ;; key-bindings
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+
+;--------------------------------------------------------------------------------------------------------------------------------;
+;                                       Command-Completion and Themes                                                            ;
+;--------------------------------------------------------------------------------------------------------------------------------;
+
 
 ;; Use-command-completion-and-description-package
 
@@ -109,11 +121,60 @@
   :ensure t
   :config
   (load-theme
-   ;;'doom-vibrant t)
-   ;;'doom-gruvbox-light t)
-   ;;'timu-macos t)
-   'nordic-night t)
+   'timu-macos t)
   )
 
 (setq mode-line-position (list "(%l,%c)"))
+
+;--------------------------------------------------------------------------------------------------------------------------------;
+;                                                 LSP and Completions                                                            ;
+;--------------------------------------------------------------------------------------------------------------------------------;
+
+;; Setup LSP with Eglot
+
+(use-package eglot)
+
+
+;; Completion Pack
+
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
+  :config
+  (setq tab-always-indent 'complete
+	corfu-min-width 250
+        corfu-min-height 750
+        corfu-count 20
+        corfu-auto t
+        corfu-cycle t
+        corfu-separator ?\s
+        corfu-preview-current "insert"
+        corfu-scroll-margin 25
+        ;; shows documentation after `corfu-popupinfo-delay'
+        corfu-popupinfo-delay '(1.25 . 0.5))
+  )
+
+(corfu-popupinfo-mode 1)
+
+(use-package nerd-icons
+  :ensure t)
+
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :config
+  (nerd-icons-completion-marginalia-setup)
+  (nerd-icons-completion-mode 1)
+  )
+
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
+  )
+
+
+(use-package go-mode)
 

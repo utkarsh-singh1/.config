@@ -20,6 +20,9 @@
 (set-fringe-style 10)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(display-battery-mode 1)
+(display-time-mode 1)
+
 (display-battery-mode t)
 (display-time-mode t)
 
@@ -51,7 +54,6 @@
 ;; Use this keybinding temporarily for maximze Emacs to its full screen potential
 (global-set-key (kbd "s-f") 'toggle-frame-fullscreen)
 
-
 ;; Custom theme path
 (add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
 
@@ -65,7 +67,9 @@
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+                         ("elpa" . "https://elpa.gnu.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			 ))
 
 (package-initialize)
 (unless package-archive-contents
@@ -253,20 +257,7 @@
 
 (use-package forge)
 
-(use-package git-gutter
-
-  :hook ((text-mode . git-gutter-mode)
-	 (prog-mode . git-gutter-mode))
-  :config
-  (setq git-gutter:update-interval 0.02)
-
-  )
-
-(use-package git-gutter-fringe
-  :config
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+(use-package git-gutter)
 
 (use-package blamer)
 
@@ -324,6 +315,7 @@
         neo-window-width 40
         neo-window-fixed-size nil
         inhibit-compacting-font-caches t
+        projectile-switch-project-action 'neotree-projectile-action) 
         projectile-switch-project-action 'neotree-projectile-action
         neo-theme (if (display-graphic-p) 'icons ))
         ;; truncate long file names in neotree
@@ -335,7 +327,8 @@
                  (make-local-variable 'auto-hscroll-mode)
                  (setq auto-hscroll-mode nil)))))
 
-(use-package treemacs)
+
+;; (use-package treemacs)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -467,10 +460,9 @@
 
 
 ;; Dashboard
+
 (use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
+  :ensure t 
   :init
   (setq initial-buffer-choice 'dashboard-open)
   (setq dashboard-banner-logo-title "Editor of the century")
@@ -492,6 +484,9 @@
   (yas-global-mode 1)
   )
 
+(add-hook 'yas-minor-mode-hook (lambda ()
+				 (yas-activate-extra-mode 'fundamental-mode)))
+         
 ;; (use-package centaur-tabs
 ;;   :demand
 ;;   :config
