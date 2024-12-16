@@ -1,5 +1,17 @@
 
-;; Basic config file for get started -
+;; ██████╗  █████╗ ██╗   ██╗███╗   ███╗ █████╗  ██████╗███████╗
+;; ██╔══██╗██╔══██╗╚██╗ ██╔╝████╗ ████║██╔══██╗██╔════╝██╔════╝
+;; ██████╔╝███████║ ╚████╔╝ ██╔████╔██║███████║██║     ███████╗
+;; ██╔══██╗██╔══██║  ╚██╔╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║
+;; ██████╔╝██║  ██║   ██║   ██║ ╚═╝ ██║██║  ██║╚██████╗███████║
+;; ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝
+                                                    
+                                           
+
+
+;---------------------------------------------------------------------------------------------------------------------------------;
+;                                                    Emacs Setup                                                                  ;
+;---------------------------------------------------------------------------------------------------------------------------------;
 
 
 ;; Set Startup-modes
@@ -10,13 +22,13 @@
 (menu-bar-mode 0)
 (display-battery-mode t)
 (display-time-mode t)
+
 ;; Put backup file or backup data in another directory instead of creating clutter
 (setq backup-directory-alist '((".*" . "~/.Trash")))
 
 ;; Set Fonts
-;; (set-face-attribute 'default nil :family "Lilex Nerd Font" :height 118 )
-;; (set-face-attribute 'default nil :family "Inconsolata LGC Nerd Font Mono" :height 118)
-(set-face-attribute 'default nil :family "iMWritingMono Nerd Font Mono" :height 132)
+(set-face-attribute 'default nil :family "FiraCode Nerd Font Mono" :height 142 :weight 'medium)
+;; (set-face-attribute 'default nil :family "iMWritingMono Nerd Font Mono" :height 132 :weight 'regular)
 
 ;; Line numbers mode
 (global-display-line-numbers-mode 1)
@@ -38,9 +50,14 @@
 
 ;; Use this keybinding temporarily for maximze Emacs to its full screen potential
 (global-set-key (kbd "s-f") 'toggle-frame-fullscreen)
-;; (if (getenv "XDG_SESSION_DESKTOP" 'KDE)
-;;     (global-set-key (kbd "s-f") 'toggle-frame-fullscreen))
 
+
+;; Custom theme path
+(add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
+
+;---------------------------------------------------------------------------------------------------------------------------------;
+;                                          Initialize Package and Respositories                                                   ;
+;---------------------------------------------------------------------------------------------------------------------------------;
 
 ;; Package Archives - where packages are stored and use-package to fecth them
 ;; Initialize package sources
@@ -158,7 +175,8 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-snazzy t)
+  (load-theme
+   'doom-tokyo-night t)
   
   ;; Enable custom neotree theme (all-the-icons must be installed!)
   (doom-themes-neotree-config)
@@ -226,62 +244,7 @@
   (which-key-mode t)
   )
 
-;; ;; (use-package general
-
-;; ;;   :config
-;; ;;   (general-create-definer basic/leader-keys
-;; ;;     :keymaps '(normal insert visual emacs)
-;; ;;     :prefix "SPC" ;; Set Space as leader key
-;; ;;     :global-prefix "C-SPC") ;; Access leader key in Insert mode
-
-
-;; ;;   ;; Options Keymaps
-;; ;;   (basic/leader-keys
-;; ;;     "o" '(:ignore t :which-key "Options")
-;; ;;     "o t" '(counsel-load-theme :which-key "choose theme")
-;; ;;     )
-  
-;; ;;   )
-
-
-;; ;; (use-package evil
-;; ;;   :init
-;; ;;   (setq evil-want-integration t)
-;; ;;   (setq evil-want-keybinding nil)
-;; ;;   (setq evil-want-C-u-scroll t)
-;; ;;   (setq evil-want-C-i-jump nil)
-;; ;;   (setq evil-vsplit-window-right t)
-;; ;;   (setq evil-split-window-below t)
-
-;; ;;   ;; (setq evil-respect-visual-line-mode t)
-;; ;;   ;; (setq evil-undo-system 'undo-tree)
-;; ;;   ;; :hook (evil-mode . rem/evil-hook)
-
-;; ;;   :config
-;; ;;   (evil-mode 1)
-;; ;;   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-;; ;;   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-;; ;;   ;; Use visual line motions even outside of visual-line-mode buffers
-;; ;;   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-;; ;;   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-
-;; ;;   (evil-set-initial-state 'messages-buffer-mode 'normal)
-;; ;;   (evil-set-initial-state 'dashboard-mode 'normal))
-
-
-;; ;; (use-package evil-collection
-;; ;;   :after evil
-;; ;;   :config
-;; ;;   (evil-collection-init)
-;; ;;   )
-
-;; (use-package projectile)
-
-
-
-;; ;; Git Based Settings
+;; Git Based Settings
 
 (use-package magit
   :custom  ;; display git diff in same window
@@ -375,22 +338,50 @@
 (use-package treemacs)
 
 
-;; ;; ;; Org-Mode setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                   Org-Mode Setup                                                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ;; Turn on indentation and auto-fill mode for Org files
-;; (defun bs/org-mode-setup ()
-;;   (org-indent-mode)
-;;   ;;(variable-pitch-mode 1)
-;;   ;;(auto-fill-mode 0)
-;;   (visual-line-mode 1))
-;;   ;;(setq evil-auto-indent nil))
 
+;; Turn on indentation and auto-fill mode for Org files
+(defun bs/org-mode-setup ()				  
+  (org-indent-mode)					  
+  ;;(variable-pitch-mode 1)				  
+  ;;(auto-fill-mode 0)				  
+  (visual-line-mode 1))				  
+  ;;(setq evil-auto-indent nil))
+
+(use-package org
+  :defer t
+  :hook (org-mode . bs/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▾"
+	org-hide-emphasis-markers nil) ;;org-hide-emphasis-marker is used to hide the markers that are used for bold, italic, underline etc. 
+  )
+
+
+(use-package org-bullets					
+  :after org							
+  :hook (org-mode . org-bullets-mode)
+  :custom							
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))	
+
+(dolist (face '((org-level-1 . 1.3)                                                                  
+                (org-level-2 . 1.1)                                                                  
+                (org-level-3 . 1.05)                                                                 
+                (org-level-4 . 1.0)                                                                  
+                (org-level-5 . 1.1)                                                                  
+                (org-level-6 . 1.1)                                                                  
+                (org-level-7 . 1.1)                                                                  
+                (org-level-8 . 1.1)))                                                                
+  (set-face-attribute (car face) nil :font "MartianMono Nerd font" :weight 'medium :height (cdr face) )) 
+                                                                                                        
 ;; (use-package org
 ;;   ;; :defer t
 ;;   :hook (org-mode . bs/org-mode-setup)
 ;;   :config
 ;;   (setq org-ellipsis " ▾"
-;;         org-hide-emphasis-markers t)
+;;         org-hide-emphasis-markers t))
 
 ;;   (setq org-directory "~/Tasks&Agenda")
   
@@ -460,11 +451,11 @@
 ;;   )
 
 
-;; (use-package org-bullets
-;;   :after org
-;;   :hook (org-mode . org-bullets-mode)
-;;   :custom
-;;   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+
+
+
+
 
 ;; (defun bs/org-mode-visual-fill ()
 ;;   (setq visual-fill-column-width 150
@@ -485,11 +476,11 @@
   (setq dashboard-banner-logo-title "Editor of the century")
   (setq dashboard-set-file-icons t)
   (setq dashboard-set-heading-icons t)
-  (setq dashboard-startup-banner "~/.config/emacs/Gnu-listen-half.jpg")
+  (setq dashboard-startup-banner "~/.config/emacs/gnu.jpg")
   (setq dashboard-center-content t)
   (setq dashboard-items '((recents  . 5)
                         (bookmarks . 5)
-                        ;; (projects . 3)
+                        (projects . 3)
                         (agenda . 3)
                         (registers . 3)))
   (setq dashboard-icon-type 'all-the-icons) 
@@ -510,3 +501,18 @@
 ;;   ("C-<next>" . centaur-tabs-forward))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                              SETUP FOR PROJECTS                                                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  )
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode 1)
+  )
